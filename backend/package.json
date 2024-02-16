@@ -5,6 +5,7 @@
   "license": "MIT",
   "description": "Backend for risk assessment project",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "type": "module",
