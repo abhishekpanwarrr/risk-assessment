@@ -220,7 +220,7 @@ const Assessment = () => {
       </div>
       {selectedRisk.length > 0 && (
         <div className="flex w-full gap-8 justify-end fixed bottom-0 right-0 bg-white p-4 pr-5">
-          <button className="text-red-600" onClick={() => setSelectedRisk("")}>
+          <button className="text-red-600" onClick={() => setSelectedRisk([])}>
             Cancel
           </button>
           <button
