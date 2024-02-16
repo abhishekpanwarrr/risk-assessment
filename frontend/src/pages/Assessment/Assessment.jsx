@@ -7,6 +7,7 @@ import { showNotification } from "../../helpers/helpers";
 import { useNavigate } from "react-router-dom";
 import { GoArrowLeft } from "react-icons/go";
 import { getFetch, postFetch } from "../../helpers/facade";
+import Loader from "../../components/Loader/Loader";
 
 const Assessment = () => {
   const [risks, setRisks] = useState([]);
@@ -14,16 +15,21 @@ const Assessment = () => {
   const [scenario, setScenario] = useState("");
   const [tab, setTab] = useState("likelihood");
   const [currentRisk, setCurrentRisk] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const result = await getFetch("risks/getRiskAssessment");
         if (result.statusCode === 200) {
           setRisks(result.data);
+          setLoading(false);
         }
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         return showNotification("Something went wrong", "error");
       }
     })();
@@ -113,7 +119,9 @@ const Assessment = () => {
                 </div>
               </tr>
 
-              {risks?.length > 0 ? (
+              {loading ? (
+                <Loader />
+              ) : risks?.length > 0 ? (
                 risks?.map((risk) => {
                   return (
                     <tr

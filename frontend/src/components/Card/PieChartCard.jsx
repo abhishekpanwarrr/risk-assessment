@@ -45,7 +45,7 @@ const PieChartCard = ({ data, loading, cardTitle }) => {
       <p className="text-sm font-medium text-left px-2 text-gray-500 bg-blue-100 py-3">
         {cardTitle}
       </p>
-      <div className=" px-1 py-2 min-h-[250px]">
+      <div className="px-1 py-2 min-h-[250px]">
         {loading ? (
           <Loader />
         ) : data?.length <= 0 ? (

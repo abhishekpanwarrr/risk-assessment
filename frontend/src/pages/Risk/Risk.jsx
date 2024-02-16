@@ -6,6 +6,7 @@ import { CgNotes } from "react-icons/cg";
 import { MdOutlineScreenshotMonitor } from "react-icons/md";
 import { IoDiamondOutline } from "react-icons/io5";
 import { getFetch } from "../../helpers/facade";
+import { LoaderIcon } from "react-hot-toast";
 
 const NAV_LINKS = [
   {
@@ -31,15 +32,19 @@ const NAV_LINKS = [
 
 const Risk = () => {
   const [totalCounts, setTotalCounts] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
+        setLoading(true);
         const res = await getFetch("risks/totalCounts");
         if (res.statusCode === 200) {
           setTotalCounts(res.data);
+          setLoading(false);
         }
       } catch (error) {
+        setLoading(false);
         return showNotification(
           "Something went wrong. Try again later",
           "error"
@@ -79,28 +84,28 @@ const Risk = () => {
 
             {item.title === "Risk Scenarios" && (
               <div className="mt-4 flex">
-                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 ">
+                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400  flex gap-2 items-center">
                   <span className="text-gray-500">All Scenarios:</span>{" "}
                   <span className="font-semibold">
-                    {totalCounts?.total ?? null}
+                    {loading ? <LoaderIcon /> : totalCounts?.total ?? null}
                   </span>
                 </span>
-                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 ">
+                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 flex gap-2 items-center">
                   <span className="text-gray-500">Enabled:</span>{" "}
                   <span className="font-semibold">
-                    {totalCounts?.enabled ?? "-"}
+                    {loading ? <LoaderIcon /> : totalCounts?.enabled ?? "-"}
                   </span>
                 </span>
-                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 ">
+                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 flex gap-2 items-center">
                   <span className="text-gray-500">Disabled:</span>{" "}
                   <span className="font-semibold">
-                    {totalCounts?.disabled ?? "-"}
+                    {loading ? <LoaderIcon /> : totalCounts?.disabled ?? "-"}
                   </span>
                 </span>
-                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 ">
+                <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded me-2 dark:bg-gray-700 dark:text-gray-400 flex gap-2 items-center">
                   <span className="text-gray-500">Draft:</span>{" "}
                   <span className="font-semibold">
-                    {totalCounts?.draft ?? null}
+                    {loading ? <LoaderIcon /> : totalCounts?.draft ?? null}
                   </span>
                 </span>
               </div>
